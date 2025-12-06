@@ -41,7 +41,7 @@ const GOAP_Planner = {
         } else {
             // If the creep is full, it should perform the action that satisfies its goal.
             if (goal.name === 'FillContainers') {
-                return [ACTIONS.TransferToContainer];
+                return [ACTIONS.DropEnergyAtContainer];
             } else if (goal.name === 'UpgradeRoomController') {
                 return [ACTIONS.UpgradeController];
             } else if (goal.name === 'ConstructBuildings') {

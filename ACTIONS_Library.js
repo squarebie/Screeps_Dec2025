@@ -101,8 +101,8 @@ const ACTIONS = {
             return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
         }
     },
-    'TransferToContainer': {
-        name: 'TransferToContainer',
+    'DropEnergyAtContainer': {
+        name: 'DropEnergyAtContainer',
         cost: 1,
         preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
         effects: (creep) => ({ 'containerFilled': true }),
@@ -112,7 +112,9 @@ const ACTIONS = {
             });
 
             if (target) {
-                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if (creep.pos.isNearTo(target)) {
+                    creep.drop(RESOURCE_ENERGY);
+                } else {
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             }
