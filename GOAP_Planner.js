@@ -18,20 +18,28 @@ const GOAP_Planner = {
      */
     findPlan: function(creep, goals) {
         // TODO: Implement a more sophisticated goal selection process.
-        // For now, we only have one goal, so we'll just use that one.
+        // For now, we only have one goal passed in at a time.
         const goal = Object.values(goals)[0]; 
 
         // This is a very basic "plan" - it's a hard-coded sequence of actions
         // that will lead to the goal. A real planner would dynamically create this
         // sequence using a search algorithm.
         
-        // For now, our simple plan is to harvest energy, then deliver it.
         // We'll check the creep's state to see which action to perform.
-        if (creep.store[RESOURCE_ENERGY] > 0) {
-            return [ACTIONS.DeliverEnergyToSpawn];
-        } else {
+        if (creep.store.getFreeCapacity() > 0) {
+            // If the creep has capacity, its first step is always to harvest.
             return [ACTIONS.HarvestEnergy];
+        } else {
+            // If the creep is full, it should perform the action that satisfies its goal.
+            if (goal.name === 'StoreEnergy') {
+                return [ACTIONS.DeliverEnergyToSpawn];
+            } else if (goal.name === 'UpgradeRoomController') {
+                return [ACTIONS.UpgradeController];
+            }
         }
+        
+        // If no plan is found, return an empty array.
+        return [];
     }
 };
 

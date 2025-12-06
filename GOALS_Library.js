@@ -5,11 +5,17 @@ const GOALS = {
         name: 'StoreEnergy',
         priority: 1,
         isAchieved: (creep) => {
-            // This goal is a continuous process, so we'll re-evaluate it each tick.
-            // A more complex goal would have a more defined end state.
             return false;
         },
         desiredState: { 'energyDelivered': true }
+    },
+    'UpgradeRoomController': {
+        name: 'UpgradeRoomController',
+        priority: 2, // Higher priority than storing energy for now
+        isAchieved: (creep) => {
+            return false;
+        },
+        desiredState: { 'controllerUpgraded': true }
     }
 };
 

@@ -9,7 +9,13 @@ function CREEP_Manager() {
         const creep = Game.creeps[name];
 
         if (!creep.memory.plan || creep.memory.plan.length === 0) {
-            creep.memory.plan = GOAP_Planner.findPlan(creep, GOALS);
+            let availableGoals = {};
+            if (creep.memory.role === 'harvester') {
+                availableGoals = { 'StoreEnergy': GOALS.StoreEnergy };
+            } else if (creep.memory.role === 'upgrader') {
+                availableGoals = { 'UpgradeRoomController': GOALS.UpgradeRoomController };
+            }
+            creep.memory.plan = GOAP_Planner.findPlan(creep, availableGoals);
         }
 
         if (creep.memory.plan && creep.memory.plan.length > 0) {

@@ -39,6 +39,21 @@ const ACTIONS = {
             }
             return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
         }
+    },
+    'UpgradeController': {
+        name: 'UpgradeController',
+        cost: 1,
+        preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
+        effects: (creep) => ({ 'controllerUpgraded': true }),
+        perform: function(creep) {
+            const controller = creep.room.controller;
+            if (controller) {
+                if (creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(controller, { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+            }
+            return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
+        }
     }
 };
 
