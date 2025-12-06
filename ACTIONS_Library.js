@@ -100,6 +100,39 @@ const ACTIONS = {
             }
             return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
         }
+    },
+    'TransferToContainer': {
+        name: 'TransferToContainer',
+        cost: 1,
+        preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
+        effects: (creep) => ({ 'containerFilled': true }),
+        perform: function(creep) {
+            const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (s) => s.structureType == STRUCTURE_CONTAINER && s.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+            });
+
+            if (target) {
+                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+            }
+            return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
+        }
+    },
+    'Repair': {
+        name: 'Repair',
+        cost: 1,
+        preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
+        effects: (creep) => ({ 'structureRepaired': true }),
+        perform: function(creep) {
+            const target = Game.getObjectById(creep.memory.repairTarget);
+            if (target) {
+                if (creep.repair(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+            }
+            return creep.store[RESOURCE_ENERGY] === 0 || !target || target.hits === target.hitsMax;
+        }
     }
 };
 

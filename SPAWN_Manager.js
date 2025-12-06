@@ -35,6 +35,13 @@ function SPAWN_Manager() {
         const builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
         if (builders.length < SYS_Config.creeps.builder.desired) {
             spawnCreep('builder', spawn);
+            return; // Only spawn one creep per tick
+        }
+
+        // Spawn haulers if we don't have enough
+        const haulers = _.filter(Game.creeps, (creep) => creep.memory.role == 'hauler');
+        if (haulers.length < SYS_Config.creeps.hauler.desired) {
+            spawnCreep('hauler', spawn);
         }
     }
 }

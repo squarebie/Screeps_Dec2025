@@ -17,6 +17,10 @@ const SYS_Config = {
         builder: {
             desired: 1,
             body: [WORK, CARRY, MOVE]
+        },
+        hauler: {
+            desired: 1,
+            body: [CARRY, CARRY, MOVE, MOVE] // No WORK parts needed
         }
     }
 };
