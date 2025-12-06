@@ -25,16 +25,25 @@ const ACTIONS = {
             return creep.store.getFreeCapacity() === 0; // Returns true when action is complete
         }
     },
-    'DeliverEnergyToSpawn': {
-        name: 'DeliverEnergyToSpawn',
+    'DeliverEnergy': {
+        name: 'DeliverEnergy',
         cost: 1,
         preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
         effects: (creep) => ({ 'energyDelivered': true }),
         perform: function(creep) {
-            const spawn = Game.spawns['Spawn1'];
-            if (spawn) {
-                if (creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(spawn, { visualizePathStyle: { stroke: '#ffffff' } });
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (s) => (s.structureType == STRUCTURE_SPAWN || s.structureType == STRUCTURE_EXTENSION) && s.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+            });
+
+            if (!target) {
+                target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: (s) => s.structureType == STRUCTURE_CONTAINER && s.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+                });
+            }
+
+            if (target) {
+                if (creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
                 }
             }
             return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
