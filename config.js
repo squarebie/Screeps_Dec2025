@@ -9,6 +9,10 @@ const config = {
         harvester: {
             desired: 2,
             body: [WORK, CARRY, MOVE]
+        },
+        upgrader: {
+            desired: 1,
+            body: [WORK, CARRY, MOVE]
         }
     }
 };
