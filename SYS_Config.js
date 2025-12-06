@@ -1,6 +1,6 @@
-// config.js
+// SYS_Config.js
 
-const config = {
+const SYS_Config = {
     performance: {
         maxCPU: 20,
         maxMemory: 2048 // in KB
@@ -17,4 +17,4 @@ const config = {
     }
 };
 
-module.exports = config;
+module.exports = SYS_Config;
