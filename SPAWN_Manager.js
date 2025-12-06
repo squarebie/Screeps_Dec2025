@@ -28,6 +28,13 @@ function SPAWN_Manager() {
         const upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
         if (upgraders.length < SYS_Config.creeps.upgrader.desired) {
             spawnCreep('upgrader', spawn);
+            return; // Only spawn one creep per tick
+        }
+
+        // Spawn builders if we don't have enough
+        const builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+        if (builders.length < SYS_Config.creeps.builder.desired) {
+            spawnCreep('builder', spawn);
         }
     }
 }

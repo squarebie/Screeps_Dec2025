@@ -7,6 +7,7 @@ function SCENE_StartingTemplate()
     const ROOM_Manager = require('ROOM_Manager')
     const CREEP_Manager = require('CREEP_Manager')
     const SPAWN_Manager = require('SPAWN_Manager')
+    const BLUEPRINT_Manager = require('BLUEPRINT_Manager')
     
     //console.log(Game.time, module.name)
     SYS_CPU = require('SYS_CPU')
@@ -15,6 +16,7 @@ function SCENE_StartingTemplate()
     ROOM_Manager()
     CREEP_Manager()
     SPAWN_Manager()
+    BLUEPRINT_Manager()
 }
 
 

@@ -13,6 +13,10 @@ const SYS_Config = {
         upgrader: {
             desired: 1,
             body: [WORK, CARRY, MOVE]
+        },
+        builder: {
+            desired: 1,
+            body: [WORK, CARRY, MOVE]
         }
     }
 };

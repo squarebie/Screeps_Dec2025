@@ -14,6 +14,8 @@ function CREEP_Manager() {
                 availableGoals = { 'StoreEnergy': GOALS.StoreEnergy };
             } else if (creep.memory.role === 'upgrader') {
                 availableGoals = { 'UpgradeRoomController': GOALS.UpgradeRoomController };
+            } else if (creep.memory.role === 'builder') {
+                availableGoals = { 'ConstructBuildings': GOALS.ConstructBuildings };
             }
             creep.memory.plan = GOAP_Planner.findPlan(creep, availableGoals);
         }

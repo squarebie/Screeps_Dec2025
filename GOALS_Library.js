@@ -16,6 +16,14 @@ const GOALS = {
             return false;
         },
         desiredState: { 'controllerUpgraded': true }
+    },
+    'ConstructBuildings': {
+        name: 'ConstructBuildings',
+        priority: 3, // Highest priority for now
+        isAchieved: (creep) => {
+            return creep.room.find(FIND_CONSTRUCTION_SITES).length === 0;
+        },
+        desiredState: { 'siteBuilt': true }
     }
 };
 

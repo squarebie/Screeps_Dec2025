@@ -44,6 +44,8 @@ const GOAP_Planner = {
                 return [ACTIONS.DeliverEnergyToSpawn];
             } else if (goal.name === 'UpgradeRoomController') {
                 return [ACTIONS.UpgradeController];
+            } else if (goal.name === 'ConstructBuildings') {
+                return [ACTIONS.BuildConstructionSite];
             }
         }
         

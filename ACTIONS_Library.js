@@ -76,6 +76,21 @@ const ACTIONS = {
             }
             return creep.store.getFreeCapacity() === 0; // Returns true when action is complete
         }
+    },
+    'BuildConstructionSite': {
+        name: 'BuildConstructionSite',
+        cost: 1,
+        preconditions: (creep) => creep.store[RESOURCE_ENERGY] > 0,
+        effects: (creep) => ({ 'siteBuilt': true }),
+        perform: function(creep) {
+            const target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+            if (target) {
+                if (creep.build(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffffff' } });
+                }
+            }
+            return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
+        }
     }
 };
 
