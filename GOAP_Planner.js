@@ -27,8 +27,17 @@ const GOAP_Planner = {
         
         // We'll check the creep's state to see which action to perform.
         if (creep.store.getFreeCapacity() > 0) {
-            // If the creep has capacity, its first step is always to harvest.
-            return [ACTIONS.HarvestEnergy];
+            // If the creep has capacity, its first step is to get energy.
+            // We'll prioritize withdrawing from storage, and fall back to harvesting.
+            const storage = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) && s.store[RESOURCE_ENERGY] > 0
+            });
+
+            if (storage) {
+                return [ACTIONS.WithdrawEnergy];
+            } else {
+                return [ACTIONS.HarvestEnergy];
+            }
         } else {
             // If the creep is full, it should perform the action that satisfies its goal.
             if (goal.name === 'StoreEnergy') {

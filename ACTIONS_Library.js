@@ -54,6 +54,28 @@ const ACTIONS = {
             }
             return creep.store[RESOURCE_ENERGY] === 0; // Returns true when action is complete
         }
+    },
+    'WithdrawEnergy': {
+        name: 'WithdrawEnergy',
+        cost: 1,
+        preconditions: (creep) => creep.store.getFreeCapacity() > 0,
+        effects: (creep) => ({ 'hasEnergy': true }),
+        perform: function(creep) {
+            const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_CONTAINER ||
+                            structure.structureType == STRUCTURE_STORAGE) &&
+                            structure.store[RESOURCE_ENERGY] > 0;
+                }
+            });
+
+            if (target) {
+                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+                }
+            }
+            return creep.store.getFreeCapacity() === 0; // Returns true when action is complete
+        }
     }
 };
 
